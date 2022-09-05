@@ -28,7 +28,6 @@ class ProfileInfoView: UIView, UITextFieldDelegate {
         let stack = UIStackView()
         stack.axis = NSLayoutConstraint.Axis.vertical
         stack.distribution = UIStackView.Distribution.fillEqually
-        stack.alignment = .leading
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -49,21 +48,18 @@ class ProfileInfoView: UIView, UITextFieldDelegate {
     lazy var firstLabel: UILabel = {
         let label = UILabel()
         label.text = "First"
-        label.textAlignment = .center
         return label
     }()
     
     lazy var middleLabel: UILabel = {
         let label = UILabel()
         label.text = "Middle"
-        label.textAlignment = .center
         return label
     }()
     
     lazy var lastLabel: UILabel = {
         let label = UILabel()
         label.text = "Last"
-        label.textAlignment = .center
         return label
     }()
     
@@ -106,11 +102,13 @@ class ProfileInfoView: UIView, UITextFieldDelegate {
             make.edges.equalToSuperview()
         }
         avatar.snp.makeConstraints { make in
-
-            make.width.equalTo((superview?.frame.width ?? 0) * 0.35)
+            make.width.equalTo(mainTopStack.snp.height)
         }
         stackForLabels.snp.makeConstraints { make in
-            make.width.equalTo((superview?.frame.width ?? 0) * 0.15)
+            make.width.equalTo((superview?.frame.width ?? 0) * 0.14)
+            make.height.equalTo(mainTopStack.snp.height)
+        }
+        stackForTextFields.snp.makeConstraints { make in
             make.height.equalTo(mainTopStack.snp.height)
         }
         super.updateConstraints()

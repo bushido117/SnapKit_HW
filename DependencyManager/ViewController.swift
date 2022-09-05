@@ -11,7 +11,6 @@ import SnapKit
 class ViewController: UIViewController, TopViewDelegate, BottomViewDelegate {
     
     var text: String = ""
-//    var text: String?
     
     lazy var profileInfoView = ProfileInfoView()
     lazy var bottomButtonsView = BottomButtonsView()
@@ -45,7 +44,7 @@ class ViewController: UIViewController, TopViewDelegate, BottomViewDelegate {
             make.top.equalToSuperview()
             make.leading.equalToSuperview().inset(10)
             make.trailing.equalToSuperview().offset(-10)
-            make.height.equalTo(120)
+            make.height.equalTo(self.view.frame.height * 0.162)
         }
         bottomButtonsView.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
@@ -63,13 +62,11 @@ class ViewController: UIViewController, TopViewDelegate, BottomViewDelegate {
 
     func textFieldResignFirstResponder(_ textField: UITextField) {
         self.text += " " + (textField.text ?? "")
-//        self.text = textField.text
     }
     
     func addTextToTextView(_ button: UIButton) {
         textView.text += self.text
         self.text = ""
-//        textView.text = self.text
     }
 }
 
