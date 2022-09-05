@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ViewController: UIViewController, TopViewDelegate, BottomViewDelegate {
+class ViewController: UIViewController {
     
     var text: String = ""
     
@@ -25,12 +25,17 @@ class ViewController: UIViewController, TopViewDelegate, BottomViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        profileInfoView.topViewDelegate = self
-        bottomButtonsView.bottomViewDelegate = self
         self.navigationController?.navigationBar.isTranslucent = false
         self.title = "Profile"
         addSubviews()
         makeConstraints()
+        profileInfoView.textEditingEnded = { [weak self] textField in
+            self?.text += " " + (textField.text ?? "")
+        }
+        bottomButtonsView.saveButtonTapped = { [weak self] button in
+            self?.textView.text += self?.text ?? ""
+            self?.text = ""
+        }
     }
     
     func addSubviews() {
@@ -52,21 +57,13 @@ class ViewController: UIViewController, TopViewDelegate, BottomViewDelegate {
             make.trailing.equalToSuperview().offset(-10)
             make.height.equalTo(self.view.frame.height * 0.08)
         }
+
         textView.snp.makeConstraints { make in
             make.bottom.equalTo(bottomButtonsView.snp.top)
             make.top.equalTo(profileInfoView.snp.bottom).offset(10)
             make.leading.equalToSuperview().offset(10)
             make.trailing.equalToSuperview().offset(-10)
         }
-    }
-
-    func textFieldResignFirstResponder(_ textField: UITextField) {
-        self.text += " " + (textField.text ?? "")
-    }
-    
-    func addTextToTextView(_ button: UIButton) {
-        textView.text += self.text
-        self.text = ""
     }
 }
 

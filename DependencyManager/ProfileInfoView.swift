@@ -8,13 +8,9 @@
 import UIKit
 import SnapKit
 
-protocol TopViewDelegate: AnyObject {
-    func textFieldResignFirstResponder(_ textField: UITextField)
-}
-
 class ProfileInfoView: UIView, UITextFieldDelegate {
     
-    weak var topViewDelegate: TopViewDelegate?
+    var textEditingEnded: ((UITextField) -> Void)?
     
     lazy var mainTopStack: UIStackView = {
         let stack = UIStackView()
@@ -128,6 +124,6 @@ class ProfileInfoView: UIView, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        topViewDelegate?.textFieldResignFirstResponder(textField)
+        textEditingEnded?(textField)
     }
 }

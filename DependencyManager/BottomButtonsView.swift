@@ -8,13 +8,13 @@
 import UIKit
 import SnapKit
 
-protocol BottomViewDelegate: AnyObject {
-    func addTextToTextView (_ button: UIButton)
-}
+//protocol BottomViewDelegate: AnyObject {
+//    func addTextToTextView (_ button: UIButton)
+//}
 
 class BottomButtonsView: UIView {
 
-    weak var bottomViewDelegate: BottomViewDelegate?
+    var saveButtonTapped: ((UIButton) -> Void)?
 
     lazy var bottomButtonsStack: UIStackView = {
         let stack = UIStackView()
@@ -29,7 +29,7 @@ class BottomButtonsView: UIView {
         let button = UIButton()
         button.setTitle("Save", for: .normal)
         button.setTitleColor(.blue, for: .normal)
-        button.addTarget(self, action: #selector(saveButtonTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(saveButtonTap(button:)), for: .touchUpInside)
         return button
     }()
     
@@ -45,7 +45,7 @@ class BottomButtonsView: UIView {
         let button = UIButton()
         button.setTitle("Clean", for: .normal)
         button.setTitleColor(.blue, for: .normal)
-        button.addTarget(self, action: #selector(cancelButtonTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(cleanButtonTap), for: .touchUpInside)
         return button
     }()
     
@@ -72,8 +72,8 @@ class BottomButtonsView: UIView {
         addSubview(bottomButtonsStack)
     }
     
-    @objc func saveButtonTap() {
-        bottomViewDelegate?.addTextToTextView(saveButton)
+    @objc func saveButtonTap(button: UIButton) {
+        saveButtonTapped?(button)
     }
     
     @objc func cancelButtonTap() {
